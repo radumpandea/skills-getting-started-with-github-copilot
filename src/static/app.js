@@ -20,14 +20,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        const participantsList = details.participants.length > 0
+          ? `<ul>${details.participants.map(p => `<li>${p}</li>`).join("")}</ul>`
+          : "<p><em>No participants yet</em></p>";
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <div class="participants-section">
+            <strong>Participants:</strong>
+            ${participantsList}
+          </div>
         `;
 
         activitiesList.appendChild(activityCard);
+
+        // Add delete icon for each participant
+        const deleteIcon = document.createElement('span');
+        deleteIcon.innerHTML = '🗑️'; // Unicode for trash can
+        deleteIcon.className = 'delete-icon';
+        deleteIcon.onclick = () => unregisterParticipant(name);
+        activityCard.appendChild(deleteIcon);
 
         // Add option to select dropdown
         const option = document.createElement("option");
@@ -62,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        // Refresh activities list to show updated participants
+        fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
