@@ -6,6 +6,17 @@
 }
 
 body {
+  /* Hide bullet points for lists */
+  ul, ol {
+    list-style-type: none;
+  }
+
+  /* Style for delete icon */
+  .delete-icon {
+    cursor: pointer;
+    color: red;
+    margin-left: 10px;
+  }
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #333;

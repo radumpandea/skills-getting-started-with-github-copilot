@@ -15,6 +15,11 @@ app = FastAPI(title="Mergington High School API",
               description="API for viewing and signing up for extracurricular activities")
 
 # Mount the static files directory
+
+@app.delete("/unregister/{participant_name}")
+async def unregister(participant_name: str):
+    # Logic to unregister participant
+    return {"message": f"{participant_name} unregistered successfully."}
 current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")

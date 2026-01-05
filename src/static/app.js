@@ -37,6 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         activitiesList.appendChild(activityCard);
 
+        // Add delete icon for each participant
+        const deleteIcon = document.createElement('span');
+        deleteIcon.innerHTML = '🗑️'; // Unicode for trash can
+        deleteIcon.className = 'delete-icon';
+        deleteIcon.onclick = () => unregisterParticipant(name);
+        activityCard.appendChild(deleteIcon);
+
         // Add option to select dropdown
         const option = document.createElement("option");
         option.value = name;
@@ -70,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        // Refresh activities list to show updated participants
+        fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
